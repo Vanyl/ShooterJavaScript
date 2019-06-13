@@ -1,0 +1,46 @@
+<html>
+<!-- Comment html -->
+    <head>
+       <script src="/PhaserLib/phaser.min.js"></script>
+       
+       
+        <title> Test Phaser</title>
+    </head>
+
+    <body>
+       <script type="text/javascript"> //spécifier le langage 
+           // Comment jv
+           var config = {
+                    type: Phaser.AUTO,
+                    width:800,
+                    height:200,
+                    physics:{
+                        default : 'arcade'},
+                        scene: { 
+                            preload:preload,
+                            create : create,
+                            update : update
+                        }                
+                };
+           
+           var game = new Phaser.Game(config);
+           
+           function preload() {
+               this.load.image('navi', '../Assets/futaba.gif')
+               this.load.image('navi', '../Assets/futaba.gif')
+           };
+           
+           function create() {
+               this.add.sprite(150, 100, 'navi')
+               this.add.sprite(350, 100, 'navi')
+           };
+           
+           function update() {
+               
+           };
+           
+        </script>
+        
+    </body>
+
+</html>
