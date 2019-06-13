@@ -27,8 +27,13 @@
 
         var game = new Phaser.Game(config);
         var myShip, myBackground, myBullet, myEnnemy, myTimerBullet, myEnnemy_Bullet;
-        var layer, cursors;
+        var layer, cursors, explosion, explosionSound;
+        var invincibility; 
 
+        
+        ///////////// PRELOAD
+        
+        
         function preload() {
             //this.load.image('background', '../Assets/background.png')
             this.load.image('spaceship', '../Assets/whaleship.png');
@@ -36,13 +41,25 @@
             this.load.image('bullet', '../Assets/bullet.png')
             this.load.image('ennemy', '../Assets/ennemy.png')
             this.load.image('ennemy_bullet', '../Assets/bullets.png')
+            
 
             this.load.image('tiles', '../Assets/tiles.png');
             this.load.tilemapTiledJSON('background', 'background.json');
-
+            
+            this.load.spritesheet('boom', '../Assets/explosion.png', {
+                frameWidth : 128,
+                frameHeight : 128
+            });
+            this.load.spritesheet('sudden_ennemy','../Assets/boss.gif')
+            
+            this.load.audio('explosion_sound', '../Assets/explosion.wav')
 
         };
 
+        
+        ////////////// CREATION
+        
+        
         function create() {
 
             const map = this.make.tilemap({
@@ -61,6 +78,9 @@
             //myBackground = this.add.image(400,300, 'background');
 
             myShip = this.physics.add.sprite(100, 300, 'spaceship');
+//          myShip.live=3;
+//          myShip.invincible = false;
+            
             myEnnemy = this.add.sprite(510, 530, 'ennemy');
 
 
@@ -73,9 +93,21 @@
             });
             
             layer.setCollisionBetween(1, 3055);
+            
+            var explosionAnimation = this.anims.create({
+                key: 'explode',
+                frames: this.anims.generateFrameNumbers('boom'),
+                frameRate: 10,//rapidité à laquelle sera lue
+                repeat:0
+            });
+            
+            explosionSound = this.sound.add('explosion_sound');
+            
 
         };
 
+        
+        /////////// UPDATE
         
         
         function update() {
@@ -124,24 +156,81 @@
 
         }
 
+        
+        ///////// MES FONCTIONS
+        
+        
         function fireBullet() {
             myEnnemy_Bullet = this.physics.add.sprite(myEnnemy.x, myEnnemy.y, 'ennemy_bullet');
             myEnnemy_Bullet.setVelocity(myShip.x - myEnnemy_Bullet.x, myShip.y - myEnnemy_Bullet.y);
 
             var distance = Math.sqrt((myShip.x - myEnnemy.x) * (myShip.x - myEnnemy.x) +
                 (myShip.y - myEnnemy.y) * (myShip.y - myShip.y));
-
-        }
             
+            /*myShip.live--;
+        
+            if (myShip.live == 0) {
+                myShip.destroy();
+            }*/
+            
+        }
+        
+          
+        
+        
         function collisionPlayerBullet(_myShip, _myEnnemy_Bullet) {
             //alert("oops");
-            _myShip.setVisible(false); //rendre vaisseau invisible car si destroy error lié à l'update
+            
+            this.tweens.add ({
+                targets: [myShip],
+                alpha : 0,
+                ease: 'Linear',
+                duration: 500, //temps en milliseconde
+                repeat: 4, //par défaut il fait une fois de plus
+                yoyo : true //si true à la fin du tween il reprend sa valeur initiale
+                
+            });
+            
+            
+            //_myShip.setVisible(false); //rendre vaisseau invisible car si destroy error lié à l'update
             _myEnnemy_Bullet.destroy();
         }
         
         function collisionPlayerDecor(_myShip,_myDecor){
-            _myShip.setVisible(false);
+            //_myShip.setVisible(false);
+            
+            explosion = this.add.sprite(_myShip.x, myShip.y, 'boom');
+                
+            explosion.play('explode');
+            
+            /*explosion.once(Phaser.Animation.Events.SPRITE_ANIMATION_COMPLETE, () => {
+                //spécifie comme si appelle fonction callback
+                explosionAnimation.destroy();})*/
+            
+            
+            //timer explosion
+            var timer_explosion = this.time.addEvent ({
+                delay:1000,
+                callback: destroyExplosion,
+                //args:[],
+                callbackScope: this, //sur quel objet on travaille ? this = tout
+                repeat: 0
+            });
+            
+            _myShip.x = -1000;
+            _myShip.y = -1000;
+            
+            explosionSound.play();         
+                                     
         }
+        
+        function destroyExplosion(){
+            
+            explosion.destroy();
+            
+        }
+        
+        
     </script>
 
 </body></html>
