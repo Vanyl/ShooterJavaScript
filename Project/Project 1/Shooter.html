@@ -26,7 +26,7 @@
         };
 
         var game = new Phaser.Game(config);
-        var myShip, myBackground, myBullet, myEnnemy, myTimerBullet, myEnnemy_Bullet;
+        var myShip, myBackground, myBullet, myEnnemy, myTimerBullet, myEnnemy_Bullet, mySuddenEnnemy;
         var layer, cursors, explosion, explosionSound;
         var invincibility; 
 
@@ -41,6 +41,7 @@
             this.load.image('bullet', '../Assets/bullet.png')
             this.load.image('ennemy', '../Assets/ennemy.png')
             this.load.image('ennemy_bullet', '../Assets/bullets.png')
+            this.load.image('sudden_ennemy','../Assets/asteroid64.png')
             
 
             this.load.image('tiles', '../Assets/tiles.png');
@@ -50,7 +51,7 @@
                 frameWidth : 128,
                 frameHeight : 128
             });
-            this.load.spritesheet('sudden_ennemy','../Assets/boss.gif')
+            
             
             this.load.audio('explosion_sound', '../Assets/explosion.wav')
 
@@ -62,6 +63,7 @@
         
         function create() {
 
+            // Tiles/décor
             const map = this.make.tilemap({
                 key: 'background'
             });
@@ -70,12 +72,13 @@
 
             layer = map.createStaticLayer(0, tiles, 0, 0);
 
+            // apparition étoiles            
             for (var i = 0; i < 128; i++) {
                 this.add.sprite(Phaser.Math.Between(0, 800), Phaser.Math.Between(0, 640), 'star')
             }
 
             cursors = this.input.keyboard.createCursorKeys();
-            //myBackground = this.add.image(400,300, 'background');
+            
 
             myShip = this.physics.add.sprite(100, 300, 'spaceship');
 //          myShip.live=3;
@@ -103,7 +106,12 @@
             
             explosionSound = this.sound.add('explosion_sound');
             
-
+            var timerSpawn = this.time.addEvent({
+                delay : 1000,
+                callback: ennemySpawn,
+                callbackScope: this,
+                repeat:5
+            })
         };
 
         
@@ -228,6 +236,12 @@
             
             explosion.destroy();
             
+        }
+        
+        function ennemySpawn() {
+            mySuddenEnnemy =this.physics.add.sprite(900, Phaser.Math.Between(150, 640), 'sudden_ennemy');
+            
+            mySuddenEnnemy.setVelocity(-100,0);
         }
         
         
