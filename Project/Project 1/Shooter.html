@@ -1,99 +1,147 @@
 <html>
 <!-- Comment html -->
-    <head>
-        <script src="/PhaserLib/phaser.min.js"></script>
-              
-        <title> Template</title>
-    </head>
 
-    <body>
-       <script type="text/javascript"> //spécifier le langage 
-           // Comment jv
-           var config = {
-                    type: Phaser.AUTO,
-                    width:800,
-                    height:640,
-                    physics:{
-                        default : 'arcade'},
-                        scene: { 
-                            preload:preload,
-                            create : create,
-                            update : update
-                        }                
-                };
-           
-           var game = new Phaser.Game(config);
-           var myShip, cursors, myBackground, myBullet, myEnnemy;
-           
-           function preload() {
-               //this.load.image('background', '../Assets/background.png')
-               this.load.image('spaceship', '../Assets/whaleship.png');
-               this.load.image('star', '../Assets/star2.png');
-               this.load.image('bullet', '../Assets/bullets.png')
-               this.load.image('ennemy', '../Assets/ennemy.png')
-               
-               this.load.image('tiles', '../Assets/tiles.png');
-               this.load.tilemapTiledJSON('background', 'background.json');
-               
-               
-           };
-           
-           function create() {
-               
-               const map = this.make.tilemap({ key: 'background'});
-               
-               var tiles = map.addTilesetImage('Sci-fi', 'tiles', 16,16, 0,0);
-               
-               var layer = map.createStaticLayer (0, tiles,0,0);
-               
-               for (var i =0; i < 128; i++) {
-                   this.add.sprite(Phaser.Math.Between(0,800), Phaser.Math.Between(0,640), 'star')
-               }
-              
-               cursors = this.input.keyboard.createCursorKeys();
-               //myBackground = this.add.image(400,300, 'background');
-               
-               myShip = this.physics.add.sprite(100,300, 'spaceship');
-               myEnnemy = this.physics.add.sprite(510,530,'ennemy')
-               
-               
-            };
-           
-           function update() {
-                              
-               myShip.setVelocity(0,0) //par défaut ne bouge pas
-               
-                                              
-                    if (cursors.left.isDown) {
-                    myShip.setVelocity(-100,0);
-                    }
+<head>
+    <script src="/ShooterJavaScript/PhaserLib/phaser.min.js"></script>
 
-                    if (cursors.right.isDown) {
-                    myShip.setVelocity(100,0);
-                    }
+    <title> Template</title>
+</head>
 
-                    if (cursors.up.isDown) {
-                    myShip.setVelocity(0,-100);
-                    }
+<body>
+    <script type="text/javascript">
+        //spécifier le langage 
+        // Comment jv
+        var config = {
+            type: Phaser.AUTO,
+            width: 800,
+            height: 640,
+            physics: {
+                default: 'arcade'
+            },
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
 
-                    if (cursors.down.isDown) {
-                    myShip.setVelocity(0,100);
-                    }   
-                    
-                    if (cursors.space.isDown) {
-                    myBullet = this.physics.add.sprite(myShip.x + 10, myShip.y, 'bullet');
-                        
-                    myBullet.setVelocity(500,0);    }
-               
-                if (myShip.x < 0) {myShip.x = 0};
-                if (myShip.x > 750) {myShip.x = 750};
-                if (myShip.y < 0) {myShip.y = 0};
-                if (myShip.y > 550) {myShip.y = 550};
+        var game = new Phaser.Game(config);
+        var myShip, myBackground, myBullet, myEnnemy, myTimerBullet, myEnnemy_Bullet;
+        var layer, cursors;
 
-           }
-           
-        </script>
+        function preload() {
+            //this.load.image('background', '../Assets/background.png')
+            this.load.image('spaceship', '../Assets/whaleship.png');
+            this.load.image('star', '../Assets/star2.png');
+            this.load.image('bullet', '../Assets/bullet.png')
+            this.load.image('ennemy', '../Assets/ennemy.png')
+            this.load.image('ennemy_bullet', '../Assets/bullets.png')
+
+            this.load.image('tiles', '../Assets/tiles.png');
+            this.load.tilemapTiledJSON('background', 'background.json');
+
+
+        };
+
+        function create() {
+
+            const map = this.make.tilemap({
+                key: 'background'
+            });
+
+            var tiles = map.addTilesetImage('Sci-fi', 'tiles', 16, 16, 0, 0);
+
+            layer = map.createStaticLayer(0, tiles, 0, 0);
+
+            for (var i = 0; i < 128; i++) {
+                this.add.sprite(Phaser.Math.Between(0, 800), Phaser.Math.Between(0, 640), 'star')
+            }
+
+            cursors = this.input.keyboard.createCursorKeys();
+            //myBackground = this.add.image(400,300, 'background');
+
+            myShip = this.physics.add.sprite(100, 300, 'spaceship');
+            myEnnemy = this.add.sprite(510, 530, 'ennemy');
+
+
+            var timer = this.time.addEvent({ //je le déclare ici car on ne va pas le réutiliser ailleurs
+                delay: 1000,
+                callback: fireBullet,
+                //args:[],
+                callbackScope: this, //sur quel objet on travaille ? this = tout
+                repeat: 20
+            });
+            
+            layer.setCollisionBetween(1, 3055);
+
+        };
+
         
-    </body>
+        
+        function update() {
 
-</html>
+            myShip.setVelocity(0, 0) //par défaut ne bouge pas
+
+
+            if (cursors.left.isDown) {
+                myShip.setVelocity(-300, 0);
+            }
+
+            if (cursors.right.isDown) {
+                myShip.setVelocity(300, 0);
+            }
+
+            if (cursors.up.isDown) {
+                myShip.setVelocity(0, -300);
+            }
+
+            if (cursors.down.isDown) {
+                myShip.setVelocity(0, 300);
+            }
+
+            if (cursors.space.isDown) {
+                myBullet = this.physics.add.sprite(myShip.x + 10, myShip.y, 'bullet');
+
+                myBullet.setVelocity(500, 0);
+            }
+
+            if (myShip.x < 0) {
+                myShip.x = 0
+            };
+            if (myShip.x > 750) {
+                myShip.x = 750
+            };
+            if (myShip.y < 0) {
+                myShip.y = 0
+            };
+            if (myShip.y > 550) {
+                myShip.y = 550
+            };
+            
+            this.physics.add.collider(myShip, myEnnemy_Bullet, collisionPlayerBullet, null, this);
+            
+            this.physics.add.collider(myShip, layer, collisionPlayerDecor, null,this);
+
+        }
+
+        function fireBullet() {
+            myEnnemy_Bullet = this.physics.add.sprite(myEnnemy.x, myEnnemy.y, 'ennemy_bullet');
+            myEnnemy_Bullet.setVelocity(myShip.x - myEnnemy_Bullet.x, myShip.y - myEnnemy_Bullet.y);
+
+            var distance = Math.sqrt((myShip.x - myEnnemy.x) * (myShip.x - myEnnemy.x) +
+                (myShip.y - myEnnemy.y) * (myShip.y - myShip.y));
+
+        }
+            
+        function collisionPlayerBullet(_myShip, _myEnnemy_Bullet) {
+            //alert("oops");
+            _myShip.setVisible(false); //rendre vaisseau invisible car si destroy error lié à l'update
+            _myEnnemy_Bullet.destroy();
+        }
+        
+        function collisionPlayerDecor(_myShip,_myDecor){
+            _myShip.setVisible(false);
+        }
+    </script>
+
+</body></html>
