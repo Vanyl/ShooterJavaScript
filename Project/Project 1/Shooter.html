@@ -164,6 +164,8 @@
             this.physics.add.collider(myShip, myEnnemy_Bullet, collisionPlayerBullet, null, this);
 
             this.physics.add.collider(myShip, layer, collisionPlayerDecor, null, this);
+            
+            this.physics.add.collider(myShip, mySuddenEnnemy, collisionPlayerAsteroid,null, this);
 
         }
 
@@ -182,7 +184,10 @@
                     (myShip.y - myEnnemy.y) * (myShip.y - myShip.y));
             }
             
-            myGameover = this.add.sprite(400, 300, 'gameover');
+            else {
+                myGameover = this.add.sprite(400, 300, 'gameover');
+            }
+           
         }
 
 
@@ -261,7 +266,29 @@
             _myShip.y = -1000;
 
             explosionSound.play();
+        }
+        
+        function collisionPlayerAsteroid(_myShip,_myAsteroid) {
+            explosion = this.add.sprite(_myShip.x, myShip.y, 'boom');
 
+            explosion.play('explode');
+
+           
+
+            //timer explosion
+            var timer_explosion = this.time.addEvent({
+                delay: 1000,
+                callback: destroyExplosion,
+                //args:[],
+                callbackScope: this, //sur quel objet on travaille ? this = tout
+                repeat: 0
+            });
+
+            _myShip.x = -1000;
+            _myShip.y = -1000;
+
+            explosionSound.play();
+            
         }
 
         function destroyExplosion() {
@@ -275,6 +302,8 @@
 
             mySuddenEnnemy.setVelocity(-100, 0);
         }
+        
+        
 
     </script>
 
