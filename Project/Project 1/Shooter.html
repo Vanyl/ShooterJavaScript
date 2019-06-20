@@ -28,12 +28,12 @@
         var game = new Phaser.Game(config);
         var myShip, myBackground, myBullet, myEnnemy, myTimerBullet, myEnnemy_Bullet, mySuddenEnnemy;
         var layer, cursors, explosion, explosionSound;
-        var invincibility; 
+        var invincibility;
 
-        
+
         ///////////// PRELOAD
-        
-        
+
+
         function preload() {
             //this.load.image('background', '../Assets/background.png')
             this.load.image('spaceship', '../Assets/whaleship.png');
@@ -41,27 +41,27 @@
             this.load.image('bullet', '../Assets/bullet.png')
             this.load.image('ennemy', '../Assets/ennemy.png')
             this.load.image('ennemy_bullet', '../Assets/bullets.png')
-            this.load.image('sudden_ennemy','../Assets/asteroid64.png')
-            
+            this.load.image('sudden_ennemy', '../Assets/asteroid64.png')
+
 
             this.load.image('tiles', '../Assets/tiles.png');
             this.load.tilemapTiledJSON('background', 'background.json');
-            this.load.image('gameover', '..Assets/gameover.png')
-            
+            this.load.image('gameover', '../Assets/gameover.png')
+
             this.load.spritesheet('boom', '../Assets/explosion.png', {
-                frameWidth : 128,
-                frameHeight : 128
+                frameWidth: 128,
+                frameHeight: 128
             });
-            
-            
+
+
             this.load.audio('explosion_sound', '../Assets/explosion.wav')
 
         };
 
-        
+
         ////////////// CREATION
-        
-        
+
+
         function create() {
 
             // Tiles/décor
@@ -79,12 +79,12 @@
             }
 
             cursors = this.input.keyboard.createCursorKeys();
-            
+
 
             myShip = this.physics.add.sprite(100, 300, 'spaceship');
-            myShip.live=3;
+            myShip.live = 3;
             myShip.invincible = false;
-            
+
             myEnnemy = this.add.sprite(510, 530, 'ennemy');
 
 
@@ -95,30 +95,32 @@
                 callbackScope: this, //sur quel objet on travaille ? this = tout
                 repeat: 20
             });
-            
+
             layer.setCollisionBetween(1, 3055);
-            
+
             var explosionAnimation = this.anims.create({
                 key: 'explode',
                 frames: this.anims.generateFrameNumbers('boom'),
-                frameRate: 10,//rapidité à laquelle sera lue
-                repeat:0
+                frameRate: 10, //rapidité à laquelle sera lue
+                repeat: 0
             });
-            
+
             explosionSound = this.sound.add('explosion_sound');
-            
+
             var timerSpawn = this.time.addEvent({
-                delay : 1000,
+                delay: 1000,
                 callback: ennemySpawn,
                 callbackScope: this,
-                repeat:5
+                repeat: 5
             })
+
+
         };
 
-        
+
         /////////// UPDATE
-        
-        
+
+
         function update() {
 
             myShip.setVelocity(0, 0) //par défaut ne bouge pas
@@ -146,123 +148,136 @@
                 myBullet.setVelocity(500, 0);
             }
 
-            if (myShip.x < 0) {
-                myShip.x = 0
+            if (myShip.x < -50) {
+                myShip.x = -50
             };
             if (myShip.x > 750) {
                 myShip.x = 750
             };
-            if (myShip.y < 0) {
-                myShip.y = 0
+            if (myShip.y < -50) {
+                myShip.y = -50
             };
             if (myShip.y > 550) {
                 myShip.y = 550
             };
-            
+
             this.physics.add.collider(myShip, myEnnemy_Bullet, collisionPlayerBullet, null, this);
-            
-            this.physics.add.collider(myShip, layer, collisionPlayerDecor, null,this);
+
+            this.physics.add.collider(myShip, layer, collisionPlayerDecor, null, this);
 
         }
 
-        
+
         ///////// MES FONCTIONS
-        
-        
-        function fireBullet() {
-            myEnnemy_Bullet = this.physics.add.sprite(myEnnemy.x, myEnnemy.y, 'ennemy_bullet');
-            myEnnemy_Bullet.setVelocity(myShip.x - myEnnemy_Bullet.x, myShip.y - myEnnemy_Bullet.y);
 
-            var distance = Math.sqrt((myShip.x - myEnnemy.x) * (myShip.x - myEnnemy.x) +
-                (myShip.y - myEnnemy.y) * (myShip.y - myShip.y));
-            
-            
-        }
-        
-          
-        
-        
-        function collisionPlayerBullet(_myShip, _myEnnemy_Bullet) {
-            //alert("oops");
-            
-            
-            if(myShip.invincible == false) {
-               
-               this.tweens.add ({
-                targets: [myShip],
-                alpha : 0,
-                ease: 'Linear',
-                duration: 500, //temps en milliseconde
-                repeat: 4, //par défaut il fait une fois de plus
-                yoyo : true, //si true à la fin du tween il reprend sa valeur initiale
-                onComplete: function () { myShip.invincible = false;} //qd s'est terminé pour remettre à false sinon redevient jamais invincible
-                });
-                
-                myShip.live--;
-                if (myShip.live == 0) {
-            
-                    this.scene.restart();
-                }
-                
-                myShip.invincible = true;                        
+
+        function fireBullet() {
+
+            if (myShip.x > -50 && myShip.y > -50) {
+
+                myEnnemy_Bullet = this.physics.add.sprite(myEnnemy.x, myEnnemy.y, 'ennemy_bullet');
+                myEnnemy_Bullet.setVelocity(myShip.x - myEnnemy_Bullet.x, myShip.y - myEnnemy_Bullet.y);
+
+                var distance = Math.sqrt((myShip.x - myEnnemy.x) * (myShip.x - myEnnemy.x) +
+                    (myShip.y - myEnnemy.y) * (myShip.y - myShip.y));
             }
             
-            _myEnnemy_Bullet.destroy();
-            
-            
-                
-            
-            
-            
-            
-            
-            
-            
-            //_myShip.setVisible(false); //rendre vaisseau invisible car si destroy error lié à l'update          
-                        
+            myGameover = this.add.sprite(400, 300, 'gameover');
         }
-        
-        function collisionPlayerDecor(_myShip,_myDecor){
+
+
+
+
+        function collisionPlayerBullet(_myShip, _myEnnemy_Bullet) {
+            //alert("oops");
+
+
+            if (myShip.invincible == false) {
+
+                this.tweens.add({
+                    targets: [myShip],
+                    alpha: 0,
+                    ease: 'Linear',
+                    duration: 500, //temps en milliseconde
+                    repeat: 4, //par défaut il fait une fois de plus
+                    yoyo: true, //si true à la fin du tween il reprend sa valeur initiale
+                    onComplete: function() {
+                        myShip.invincible = false;
+                    } //qd s'est terminé pour remettre à false sinon redevient jamais invincible
+                });
+
+                myShip.live--;
+                if (myShip.live == 0) {
+
+                    // explosion
+                    explosion = this.add.sprite(_myShip.x, myShip.y, 'boom');
+
+                    explosion.play('explode');
+
+                    var timer_explosion = this.time.addEvent({
+                        delay: 1000,
+                        callback: destroyExplosion,
+                        //args:[],
+                        callbackScope: this, //sur quel objet on travaille ? this = tout
+                        repeat: 0
+                    });
+
+                    myGameover = this.add.sprite(400, 300, 'gameover');
+                    //this.scene.restart();
+                }
+
+                myShip.invincible = true;
+            }
+
+            _myEnnemy_Bullet.destroy();
+
+
+            //_myShip.setVisible(false); //rendre vaisseau invisible car si destroy error lié à l'update   
+        }
+
+
+        function collisionPlayerDecor(_myShip, _myDecor) {
             //_myShip.setVisible(false);
-            
+
             explosion = this.add.sprite(_myShip.x, myShip.y, 'boom');
-                
+
             explosion.play('explode');
-            
+
             /*explosion.once(Phaser.Animation.Events.SPRITE_ANIMATION_COMPLETE, () => {
                 //spécifie comme si appelle fonction callback
                 explosionAnimation.destroy();})*/
-            
-            
+
+
             //timer explosion
-            var timer_explosion = this.time.addEvent ({
-                delay:1000,
+            var timer_explosion = this.time.addEvent({
+                delay: 1000,
                 callback: destroyExplosion,
                 //args:[],
                 callbackScope: this, //sur quel objet on travaille ? this = tout
                 repeat: 0
             });
-            
+
             _myShip.x = -1000;
             _myShip.y = -1000;
-            
-            explosionSound.play();         
-                                     
+
+            explosionSound.play();
+
         }
-        
-        function destroyExplosion(){
-            
+
+        function destroyExplosion() {
+
             explosion.destroy();
-            
+
         }
-        
+
         function ennemySpawn() {
-            mySuddenEnnemy =this.physics.add.sprite(900, Phaser.Math.Between(215, 430), 'sudden_ennemy');
-            
-            mySuddenEnnemy.setVelocity(-100,0);
+            mySuddenEnnemy = this.physics.add.sprite(900, Phaser.Math.Between(215, 430), 'sudden_ennemy');
+
+            mySuddenEnnemy.setVelocity(-100, 0);
         }
-        
-        
+
     </script>
 
-</body></html>
+</body>
+
+</html>
