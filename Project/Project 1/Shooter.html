@@ -46,6 +46,7 @@
 
             this.load.image('tiles', '../Assets/tiles.png');
             this.load.tilemapTiledJSON('background', 'background.json');
+            this.load.image('gameover', '..Assets/gameover.png')
             
             this.load.spritesheet('boom', '../Assets/explosion.png', {
                 frameWidth : 128,
@@ -81,7 +82,7 @@
             
 
             myShip = this.physics.add.sprite(100, 300, 'spaceship');
-//          myShip.live=3;
+            myShip.live=3;
             myShip.invincible = false;
             
             myEnnemy = this.add.sprite(510, 530, 'ennemy');
@@ -175,12 +176,6 @@
             var distance = Math.sqrt((myShip.x - myEnnemy.x) * (myShip.x - myEnnemy.x) +
                 (myShip.y - myEnnemy.y) * (myShip.y - myShip.y));
             
-            /*myShip.live--;
-        
-            if (myShip.live == 0) {
-            
-                this.scene.restart();
-            }*/
             
         }
         
@@ -203,10 +198,25 @@
                 onComplete: function () { myShip.invincible = false;} //qd s'est terminé pour remettre à false sinon redevient jamais invincible
                 });
                 
-                myShip.invincible = true;
+                myShip.live--;
+                if (myShip.live == 0) {
+            
+                    this.scene.restart();
+                }
+                
+                myShip.invincible = true;                        
             }
             
             _myEnnemy_Bullet.destroy();
+            
+            
+                
+            
+            
+            
+            
+            
+            
             
             //_myShip.setVisible(false); //rendre vaisseau invisible car si destroy error lié à l'update          
                         
@@ -247,7 +257,7 @@
         }
         
         function ennemySpawn() {
-            mySuddenEnnemy =this.physics.add.sprite(900, Phaser.Math.Between(150, 650), 'sudden_ennemy');
+            mySuddenEnnemy =this.physics.add.sprite(900, Phaser.Math.Between(215, 430), 'sudden_ennemy');
             
             mySuddenEnnemy.setVelocity(-100,0);
         }
