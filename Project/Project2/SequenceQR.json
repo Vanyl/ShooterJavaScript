@@ -1,0 +1,11 @@
+{
+    "question": "Ca va ?",
+    
+    "answer1" : "Oui", 
+    "answer2" : "Non", 
+    "answer3" : "Et toi ça va ?",
+    
+    "pt1" : "1",
+    "pt2" : "1",
+    "pt3" : "0"
+}
