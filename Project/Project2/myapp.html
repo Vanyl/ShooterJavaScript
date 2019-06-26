@@ -33,9 +33,9 @@
 
 
         function preload() {
-            this.load.image('question', './Assets/conversation.png');
-            this.load.image('reponse', './Assets/reponse.png');
-            this.load.image('choice', './Assets/choice.png');
+            this.load.image('question', './Assets/bulleconvers.png');
+            this.load.image('reponse', './Assets/bulleconvers2.png');
+            this.load.image('choice', './Assets/bulleconvers3.png');
 
             this.load.text('SequenceQR', 'SequenceQR.json')
 
@@ -47,8 +47,8 @@
 
             //Rajout des bulles conversations (variable sprite)
             this.add.sprite(100, 50, 'question');            
-            sprite1 = this.add.sprite(110, 555, 'choice').setInteractive();
-            sprite2 = this.add.sprite(110, 610, 'choice').setInteractive();
+            sprite1 = this.add.sprite(90, 610, 'choice').setInteractive();
+            sprite2 = this.add.sprite(270, 610, 'choice').setInteractive();
 
             //Rajout fichier JSON
             testObject = JSON.parse(this.cache.text.get("SequenceQR"));
@@ -56,8 +56,8 @@
 
             //Lien bulle/texte (variable texte)
             question = this.add.text(40, 50, testObject.Sequence[currentid].question);
-            choice1 = this.add.text(70, 555, testObject.Sequence[currentid].answer1);
-            choice2 = this.add.text(70, 610, testObject.Sequence[currentid].answer2);
+            choice1 = this.add.text(5, 610, testObject.Sequence[currentid].answer1);
+            choice2 = this.add.text(195, 610, testObject.Sequence[currentid].answer2);
 
             //Event clic
             sprite1.on('pointerdown', addResponse1, this);
