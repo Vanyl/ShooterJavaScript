@@ -13,9 +13,9 @@
         
         {
             "id" : 1,
-            "question" : "...",
-            "answer1" : "...",
-            "answer2" : "...",
+            "question" : "BLABLA",
+            "answer1" : "BLABLA",
+            "answer2" : "BLABLA",
             
             "ifquestion1" : 2,
             "ifquestion2" : 3
@@ -25,7 +25,7 @@
             "id" : 2,
             "question" : "Pourquoi ça ne va pas ?",
             "answer1" : "On m'a encore traité de ...",
-            "answer2" : "...",
+            "answer2" : "Parce que",
             
             "ifquestion1" : 3,
             "ifquestion2" : 0 
