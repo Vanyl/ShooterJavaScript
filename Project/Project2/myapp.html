@@ -46,7 +46,7 @@
             this.cameras.main.setBackgroundColor(0xbababa);
 
             //Rajout des bulles conversations (variable sprite)
-            this.add.sprite(100, 50, 'question');            
+            this.add.sprite(175, 50, 'question');            
             sprite1 = this.add.sprite(90, 610, 'choice').setInteractive();
             sprite2 = this.add.sprite(270, 610, 'choice').setInteractive();
 
@@ -55,9 +55,12 @@
             currentid = 0;
 
             //Lien bulle/texte (variable texte)
-            question = this.add.text(40, 50, testObject.Sequence[currentid].question);
-            choice1 = this.add.text(5, 610, testObject.Sequence[currentid].answer1);
-            choice2 = this.add.text(195, 610, testObject.Sequence[currentid].answer2);
+            question = this.add.text(10, 43, testObject.Sequence[currentid].question);
+            choice1 = this.add.text(5, 605, testObject.Sequence[currentid].answer1);
+            choice2 = this.add.text(195, 605, testObject.Sequence[currentid].answer2);
+            
+            this.input.on('gameobjectover', function (pointer, sprite1) { sprite1.setTint(0x7d7d7d); });
+            this.input.on('gameobjectout', function (pointer, sprite1) { sprite1.clearTint(); });
 
             //Event clic
             sprite1.on('pointerdown', addResponse1, this);
@@ -66,8 +69,8 @@
 
 
         function addResponse1() {
-            var answer_sprite = this.add.sprite(100, 100, 'reponse');
-            answer_1 = this.add.text(80, 100, testObject.Sequence[currentid].answer1);
+            var answer_sprite = this.add.sprite(180, 115, 'reponse');
+            answer_1 = this.add.text(15, 110, testObject.Sequence[currentid].answer1);
             
             currentid = testObject.Sequence[currentid].ifquestion1;
             question.text = testObject.Sequence[currentid].question;
@@ -76,8 +79,8 @@
         }
 
         function addResponse2() {
-            var answer_sprite = this.add.sprite(100, 100, 'reponse');
-            answer_2 = this.add.text(80, 100, testObject.Sequence[currentid].answer2);
+            var answer_sprite = this.add.sprite(180, 115, 'reponse');
+            answer_2 = this.add.text(15, 110, testObject.Sequence[currentid].answer2);
             
             currentid = testObject.Sequence[currentid].ifquestion2;
             question.text = testObject.Sequence[currentid].question;
