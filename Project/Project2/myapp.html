@@ -25,10 +25,8 @@
 
         var sprite1, sprite2, choice1, choice1;
         var testObject, answer_1, answer_2;
-        var answer, question, imageQuestion, imageAnswer; //tableaux question_sprite, answer_sprite
-
+        var answer, question, imageQuestion, imageAnswer; //tableaux
         var currentIndex = 0;
-        //var answerIndex = 0;
         var questionId = 0;
 
         function preload() {
@@ -37,7 +35,6 @@
             this.load.image('choice', './Assets/bulleconvers3.png');
             this.load.text('SequenceQR', 'SequenceQR.json')
         }
-
 
         function create() {
             this.cameras.main.setBackgroundColor(0xbababa);
@@ -48,7 +45,7 @@
             imageAnswer = new Array(40);
             imageQuestion = new Array(40);
 
-            //Rajout des bulles conversations (variable sprite)            
+            //Rajout des bulles conversations (variable sprite)    
             imageQuestion[currentIndex] = this.add.sprite(175, 460, 'question');
             sprite1 = this.add.sprite(90, 610, 'choice').setInteractive();
             sprite2 = this.add.sprite(270, 610, 'choice').setInteractive();
@@ -56,12 +53,21 @@
             //Rajout fichier JSON
             testObject = JSON.parse(this.cache.text.get("SequenceQR"));
 
-            //Lien bulle/texte (variable texte)            
-            question[questionId] = this.add.text(10, 450, testObject.Sequence[questionId].question);
+            //Lien bulle/texte (variable texte)
+            
+            var questionPositionY = 450;
 
+            //Pour replacer correctement les textes sur deux lignes
+            if (testObject.Sequence[questionId].question.includes("\n")) {
+                questionPositionY = 445;
+            }
+            question[questionId] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
+            
+            // Choix texte 1st apparition
             choice1 = this.add.text(5, 605, testObject.Sequence[questionId].answer1);
             choice2 = this.add.text(195, 605, testObject.Sequence[questionId].answer2);
-
+            
+            //Changement de couleur si souris passe dessus
             this.input.on('gameobjectover', function(pointer, sprite1) {
                 sprite1.setTint(0x7d7d7d);
             });
@@ -73,15 +79,14 @@
             sprite1.on('pointerdown', addResponse1, this);
             sprite2.on('pointerdown', addResponse2, this);
         }
-
+        
+        //Si choix 1
         function addResponse1() {
             //ajout sprite réponse qd clique sur choice
             imageAnswer[currentIndex] = this.add.sprite(155, 530, 'reponse');
+            
+            //if(){} //pour endroit texte si trop long
             answer[currentIndex] = this.add.text(15, 520, testObject.Sequence[questionId].answer1);
-
-            //ajout sprite question qd clique sur choice
-            /* imageQuestion[0] = this.add.sprite(155, 450, 'question');            
-             question[questionIndex] = this.add.text(15, 443, testObject.Sequence[currentId].question1);*/
 
             //Monte les réponses
             for (var i = 0; i <= currentIndex; i++) {
@@ -125,29 +130,31 @@
 
             });
         }
-
+        
+        //Si choix 2
         function addResponse2() {
             imageAnswer[currentIndex] = this.add.sprite(155, 530, 'reponse');
             //var answer_sprite = 
             answer[currentIndex] = this.add.text(15, 520, testObject.Sequence[questionId].answer2);
 
-            for (var i =0; i<= currentIndex ; i++) {
+            //Effet 'scrollant' les questions/réponses montent
+            for (var i = 0; i <= currentIndex; i++) {
 
-                //Monte texte réponses
+                //Monte texte réponses 
                 this.tweens.add({
                     targets: answer[i],
                     y: answer[i].y - 150,
                     ease: 'Power1',
                     duration: 3000
                 })
-                //Monte sprite réponse
+                //Monte sprites réponses
                 this.tweens.add({
                     targets: imageAnswer[i],
                     y: imageAnswer[i].y - 150,
                     ease: 'Power1',
                     duration: 3000
                 })
-                //Monte texte question
+                //Monte texte questions
                 this.tweens.add({
                     targets: question[i],
                     y: question[i].y - 150,
@@ -155,10 +162,11 @@
                     ease: 'Power1',
                     duration: 3000
                 })
-                // Monte sprite question
+                // Monte sprites questions
                 this.tweens.add({
                     targets: imageQuestion[i],
-                    y: imageQuestion[i].y - 150, /*310*/
+                    y: imageQuestion[i].y - 150,
+                    /*310*/
                     ease: 'Power1',
                     duration: 3000
                 })
@@ -171,33 +179,37 @@
                 callback: appearanceAnswer,
                 callbackScope: this,
                 repeat: 0
-
             });
+            
+            //condition pour fin
+            //if () {}
         }
-
-
+        
         function appearanceAnswer() {
-
             questionId = testObject.Sequence[questionId].ifquestion2;
             imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
-            question[currentIndex] = this.add.text(10, 543, testObject.Sequence[questionId].question);
-            //question.text = testObject.Sequence[questionId].question;
+
+            //Pour replacer correctement les textes sur deux lignes
+            var questionPositionY = 543;
+            if (testObject.Sequence[questionId].question.includes("\n")) {
+                questionPositionY = 530;
+            }            
+            question[currentIndex] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
+
             choice2.text = testObject.Sequence[questionId].answer2;
             choice1.text = testObject.Sequence[questionId].answer1;
 
-            //Monte texte question
+            //Monte texte question si pas là question reste en bas
             var tween2 = this.tweens.add({
                 targets: question[currentIndex],
-                y: 443,
-                /*300*/
+                y: question[currentIndex].y-100,                
                 ease: 'Power1',
                 duration: 3000
             })
             // Monte sprite question
             var tween3 = this.tweens.add({
                 targets: imageQuestion[currentIndex],
-                y: 450,
-                /*305*/
+                y: 450,                
                 ease: 'Power1',
                 duration: 3000
             })

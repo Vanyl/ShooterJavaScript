@@ -2,7 +2,7 @@
     "Sequence": [
         {
             "id" : 0,
-            "question": "Salut, ça va ?", 
+            "question": "Salut,\nça va ?", 
 
             "answer1": "Oui",
             "answer2": "Non",
@@ -23,7 +23,7 @@
         
         {
             "id" : 2,
-            "question" : "Pourquoi ça ne va pas ?",
+            "question" : "Pourquoi\nça ne va pas ?",
             "answer1" : "On m'a encore traité de ...",
             "answer2" : "Parce que",
             
@@ -43,7 +43,7 @@
         
         {
             "id" : 4,
-            "question" : "Tu viens quand même à l'école demain non?",
+            "question" : "Tu viens quand même \nà l'école demain non?",
             "answer1" : "Non",
             "answer2" : "Oui peut-être...",
             
