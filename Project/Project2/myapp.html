@@ -47,17 +47,17 @@
             answer = new Array(40);
             imageAnswer = new Array(40);
             imageQuestion = new Array(40);
-            
+
             //Rajout des bulles conversations (variable sprite)            
-            imageQuestion[currentIndex] = this.add.sprite(175, 450, 'question');
+            imageQuestion[currentIndex] = this.add.sprite(175, 460, 'question');
             sprite1 = this.add.sprite(90, 610, 'choice').setInteractive();
             sprite2 = this.add.sprite(270, 610, 'choice').setInteractive();
 
             //Rajout fichier JSON
             testObject = JSON.parse(this.cache.text.get("SequenceQR"));
-            
+
             //Lien bulle/texte (variable texte)            
-            question[questionId] = this.add.text(10, 443, testObject.Sequence[questionId].question);
+            question[questionId] = this.add.text(10, 450, testObject.Sequence[questionId].question);
 
             choice1 = this.add.text(5, 605, testObject.Sequence[questionId].answer1);
             choice2 = this.add.text(195, 605, testObject.Sequence[questionId].answer2);
@@ -99,7 +99,7 @@
             })
             var tween2 = this.tweens.add({
                 targets: question[currentIndex],
-                y: 300,
+                y: 305,
                 /*335*/
                 ease: 'Power1',
                 duration: 3000
@@ -107,80 +107,94 @@
             //Monte sprite question
             var tween3 = this.tweens.add({
                 targets: imageQuestion[currentIndex],
-                y: 305,
+                y: 310,
                 ease: 'Power1',
                 duration: 3000
             })
             currentIndex++;
-            
-            questionId = testObject.Sequence[questionId].ifquestion1;
-            imageQuestion[currentIndex] = this.add.sprite(175, 600, 'question');
-            question[currentIndex] = this.add.text(10, 600, testObject.Sequence[questionId].question);
-            choice1.text = testObject.Sequence[questionId].answer1;
-            choice2.text = testObject.Sequence[questionId].answer2;
 
-            //Monte question
-            var tween2 = this.tweens.add({
-                targets: question[currentIndex],
-                y: 443,
-                /*335*/
-                ease: 'Power1',
-                duration: 3000
-            })
-            //Monte sprite question
-            var tween3 = this.tweens.add({
-                targets: imageQuestion[currentIndex],
-                y: 450,
-                ease: 'Power1',
-                duration: 3000
-            })
+            //Timer
+            var timer_appearance = this.time.addEvent({
+                delay: 1000,
+                callback: appearanceAnswer,
+                callbackScope: this,
+                repeat: 0
 
+            });    
         }
 
         function addResponse2() {
-            imageAnswer[0] = this.add.sprite(155, 545, 'reponse');
+            imageAnswer[currentIndex] = this.add.sprite(155, 545, 'reponse');
             //var answer_sprite = 
-            answer[answerIndex] = this.add.text(15, 535, testObject.Sequence[currentId].answer2);
+            answer[currentIndex] = this.add.text(15, 535, testObject.Sequence[questionId].answer2);
 
             //Monte texte réponse
             var tween = this.tweens.add({
-                targets: answer[answerIndex],
+                targets: answer[currentIndex],
                 y: 375,
                 ease: 'Power1',
                 duration: 3000
             })
             //Monte sprite réponse
             var tween = this.tweens.add({
-                targets: imageAnswer[answerIndex],
+                targets: imageAnswer[currentIndex],
                 y: 380,
                 ease: 'Power1',
                 duration: 3000
             })
-            answerIndex++;
-
-            currentId = testObject.Sequence[currentId].ifquestion2;
-            question.text = testObject.Sequence[currentId].question;
-            choice2.text = testObject.Sequence[currentId].answer2;
-            choice1.text = testObject.Sequence[currentId].answer1;
-
-            question[currentId] = this.add.text(10, 443, testObject.Sequence[currentId].question);
-
             //Monte texte question
             var tween2 = this.tweens.add({
-                targets: question[questionIndex],
-                y: 300,
-                /*300*/
-                ease: 'Power1',
-                duration: 2000
-            })
-            // Monte sprite question
-            var tween3 = this.tweens.add({
-                targets: imageQuestion[questionIndex],
+                targets: question[currentIndex],
                 y: 305,
+                /*300*/
                 ease: 'Power1',
                 duration: 3000
             })
-            questionIndex++;
+            // Monte sprite question
+            var tween3 = this.tweens.add({
+                targets: imageQuestion[currentIndex],
+                y: 310,
+                ease: 'Power1',
+                duration: 3000
+            })
+            currentIndex++;
+
+            //Timer
+            var timer_appearance = this.time.addEvent({
+                delay: 1000,
+                callback: appearanceAnswer,
+                callbackScope: this,
+                repeat: 0
+
+            });
+        }
+
+
+        function appearanceAnswer() {
+
+            questionId = testObject.Sequence[questionId].ifquestion2;
+            imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
+            question[currentIndex] = this.add.text(10, 543, testObject.Sequence[questionId].question);
+            //question.text = testObject.Sequence[questionId].question;
+            choice2.text = testObject.Sequence[questionId].answer2;
+            choice1.text = testObject.Sequence[questionId].answer1;
+
+            //Monte texte question
+            var tween2 = this.tweens.add({
+                targets: question[currentIndex],
+                y: 443,
+                /*300*/
+                ease: 'Power1',
+                duration: 3000
+            })
+            // Monte sprite question
+            var tween3 = this.tweens.add({
+                targets: imageQuestion[currentIndex],
+                y: 450,
+                /*305*/
+                ease: 'Power1',
+                duration: 3000
+            })
         }
     </script>
 
