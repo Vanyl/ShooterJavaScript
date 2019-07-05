@@ -76,91 +76,97 @@
 
         function addResponse1() {
             //ajout sprite réponse qd clique sur choice
-            imageAnswer[currentIndex] = this.add.sprite(155, 545, 'reponse');
-            answer[currentIndex] = this.add.text(15, 535, testObject.Sequence[questionId].answer1);
+            imageAnswer[currentIndex] = this.add.sprite(155, 530, 'reponse');
+            answer[currentIndex] = this.add.text(15, 520, testObject.Sequence[questionId].answer1);
 
             //ajout sprite question qd clique sur choice
             /* imageQuestion[0] = this.add.sprite(155, 450, 'question');            
              question[questionIndex] = this.add.text(15, 443, testObject.Sequence[currentId].question1);*/
 
-            //Monte la réponse
-            var tween = this.tweens.add({
-                targets: answer[currentIndex],
-                y: 375,
-                ease: 'Power1',
-                duration: 3000
-            })
-            //Monte sprite réponse
-            var tween = this.tweens.add({
-                targets: imageAnswer[currentIndex],
-                y: 380,
-                ease: 'Power1',
-                duration: 3000
-            })
-            var tween2 = this.tweens.add({
-                targets: question[currentIndex],
-                y: 305,
-                /*335*/
-                ease: 'Power1',
-                duration: 3000
-            })
-            //Monte sprite question
-            var tween3 = this.tweens.add({
-                targets: imageQuestion[currentIndex],
-                y: 310,
-                ease: 'Power1',
-                duration: 3000
-            })
+            //Monte les réponses
+            for (var i = 0; i <= currentIndex; i++) {
+                this.tweens.add({
+                    targets: answer[i],
+                    y: answer[i].y - 150,
+                    ease: 'Power1',
+                    duration: 3000
+                })
+                //Monte sprite réponse
+                this.tweens.add({
+                    targets: imageAnswer[i],
+                    y: imageAnswer[i].y - 150,
+                    ease: 'Power1',
+                    duration: 3000
+                })
+                this.tweens.add({
+                    targets: question[i],
+                    y: question[i].y - 150,
+                    /*335*/
+                    ease: 'Power1',
+                    duration: 3000
+                })
+                //Monte sprite question
+                this.tweens.add({
+                    targets: imageQuestion[i],
+                    y: imageQuestion[i].y - 150,
+                    ease: 'Power1',
+                    duration: 3000
+                })
+            }
+
             currentIndex++;
 
             //Timer
-            var timer_appearance = this.time.addEvent({
+            this.time.addEvent({
                 delay: 1000,
                 callback: appearanceAnswer,
                 callbackScope: this,
                 repeat: 0
 
-            });    
+            });
         }
 
         function addResponse2() {
-            imageAnswer[currentIndex] = this.add.sprite(155, 545, 'reponse');
+            imageAnswer[currentIndex] = this.add.sprite(155, 530, 'reponse');
             //var answer_sprite = 
-            answer[currentIndex] = this.add.text(15, 535, testObject.Sequence[questionId].answer2);
+            answer[currentIndex] = this.add.text(15, 520, testObject.Sequence[questionId].answer2);
 
-            //Monte texte réponse
-            var tween = this.tweens.add({
-                targets: answer[currentIndex],
-                y: 375,
-                ease: 'Power1',
-                duration: 3000
-            })
-            //Monte sprite réponse
-            var tween = this.tweens.add({
-                targets: imageAnswer[currentIndex],
-                y: 380,
-                ease: 'Power1',
-                duration: 3000
-            })
-            //Monte texte question
-            var tween2 = this.tweens.add({
-                targets: question[currentIndex],
-                y: 305,
-                /*300*/
-                ease: 'Power1',
-                duration: 3000
-            })
-            // Monte sprite question
-            var tween3 = this.tweens.add({
-                targets: imageQuestion[currentIndex],
-                y: 310,
-                ease: 'Power1',
-                duration: 3000
-            })
+            for (var i =0; i<= currentIndex ; i++) {
+
+                //Monte texte réponses
+                this.tweens.add({
+                    targets: answer[i],
+                    y: answer[i].y - 150,
+                    ease: 'Power1',
+                    duration: 3000
+                })
+                //Monte sprite réponse
+                this.tweens.add({
+                    targets: imageAnswer[i],
+                    y: imageAnswer[i].y - 150,
+                    ease: 'Power1',
+                    duration: 3000
+                })
+                //Monte texte question
+                this.tweens.add({
+                    targets: question[i],
+                    y: question[i].y - 150,
+                    /*305*/
+                    ease: 'Power1',
+                    duration: 3000
+                })
+                // Monte sprite question
+                this.tweens.add({
+                    targets: imageQuestion[i],
+                    y: imageQuestion[i].y - 150, /*310*/
+                    ease: 'Power1',
+                    duration: 3000
+                })
+            }
             currentIndex++;
 
             //Timer
-            var timer_appearance = this.time.addEvent({
+            this.time.addEvent({
                 delay: 1000,
                 callback: appearanceAnswer,
                 callbackScope: this,
