@@ -57,7 +57,13 @@
         
         {
             "id" : 5,
-            "question" : "Quelques jours après... X a disparu"
+            "question" : "Quelques jours après... X a disparu",
+            "answer1" : "Non dfgdg",
+            "answer2" : "Oui peut-être...",
+            
+            
+            "ifquestion1" : 6,
+            "ifquestion2" : 5
         },
         
         
