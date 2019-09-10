@@ -118,7 +118,9 @@
                     duration: 3000
                 })
             }
+
             currentIndex++;
+
             //Timer
             this.time.addEvent({
                 delay: 1000,
@@ -126,8 +128,11 @@
                 args: [testObject.Sequence[questionId].ifquestion1],
                 callbackScope: this,
                 repeat: 0
-
             });
+
+            
+
+
         }
 
         //Si choix 2
@@ -180,6 +185,8 @@
                 callbackScope: this,
                 repeat: 0
             });
+            
+            questionId++;
 
             //condition pour fin
             //if () {}
@@ -188,7 +195,7 @@
         function appearanceAnswer(questionId) {
             //alert(questionId);
             //questionId = testObject.Sequence[questionId].ifquestion2;
-            //questionId = testObject.Sequence[questionId].ifquestion2;
+
 
             imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
 
@@ -199,8 +206,8 @@
             }
             question[currentIndex] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
 
-            choice2.text = testObject.Sequence[questionId].answer2;
             choice1.text = testObject.Sequence[questionId].answer1;
+            choice2.text = testObject.Sequence[questionId].answer2;
 
             //Monte texte question si pas là question reste en bas
             var tween2 = this.tweens.add({
@@ -216,12 +223,7 @@
                 ease: 'Power1',
                 duration: 3000
             });
-
-            
         }
-
     </script>
 
-</body>
-
-</html>
+</body></html>
