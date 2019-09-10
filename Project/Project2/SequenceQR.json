@@ -2,33 +2,33 @@
     "Sequence": [
         {
             "id" : 0,
-            "question": "Salut,\nça va ?", 
+            "question": "Hey,\nhow ur doing ?", 
 
-            "answer1": "Oui",
-            "answer2": "Non",
+            "answer1": "Who are you ?",
+            "answer2": "Don't answer",
             
-            "ifquestion1" : 5, 
-            "ifquestion2" : 2
+            "ifquestion1" : 1, 
+            "ifquestion2" : 6 
         },
         
         {
             "id" : 1,
-            "question" : "BLABLA",
-            "answer1" : "BLABLA",
-            "answer2" : "BLABLA",
+            "question" : "Calm down sweaty",
+            "answer1" : "I don't know you",
+            "answer2" : "Block number",
             
             "ifquestion1" : 2,
-            "ifquestion2" : 3
+            "ifquestion2" : 6
         },
         
         {
             "id" : 2,
-            "question" : "Pourquoi\nça ne va pas ?",
-            "answer1" : "On m'a encore traité de ...",
-            "answer2" : "Parce que",
+            "question" : "How much do \nyou take?",
+            "answer1" : "I don't understand",
+            "answer2" : "What r u talking about",
             
             "ifquestion1" : 3,
-            "ifquestion2" : 0 
+            "ifquestion2" : 3 
         },
         
         {
@@ -71,7 +71,12 @@
         {
             "id" : 6, 
             "question" : "Ecoute, on va aller ensemble parler à la direction demain",
-            "answer1" : "Ok"}
+            "answer1" : "Ok",
+            "answer2" : "Oui peut-être...",
+            
+            
+            "ifquestion1" : 6,
+            "ifquestion2" : 5}
             
  ]
 

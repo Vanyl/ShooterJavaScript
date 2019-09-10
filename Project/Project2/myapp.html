@@ -54,7 +54,7 @@
             testObject = JSON.parse(this.cache.text.get("SequenceQR"));
 
             //Lien bulle/texte (variable texte)
-            
+
             var questionPositionY = 450;
 
             //Pour replacer correctement les textes sur deux lignes
@@ -62,11 +62,11 @@
                 questionPositionY = 445;
             }
             question[questionId] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
-            
+
             // Choix texte 1st apparition
             choice1 = this.add.text(5, 605, testObject.Sequence[questionId].answer1);
             choice2 = this.add.text(195, 605, testObject.Sequence[questionId].answer2);
-            
+
             //Changement de couleur si souris passe dessus
             this.input.on('gameobjectover', function(pointer, sprite1) {
                 sprite1.setTint(0x7d7d7d);
@@ -79,12 +79,12 @@
             sprite1.on('pointerdown', addResponse1, this);
             sprite2.on('pointerdown', addResponse2, this);
         }
-        
+
         //Si choix 1
         function addResponse1() {
             //ajout sprite réponse qd clique sur choice
             imageAnswer[currentIndex] = this.add.sprite(155, 530, 'reponse');
-            
+
             //if(){} //pour endroit texte si trop long
             answer[currentIndex] = this.add.text(15, 520, testObject.Sequence[questionId].answer1);
 
@@ -118,19 +118,18 @@
                     duration: 3000
                 })
             }
-
             currentIndex++;
-
             //Timer
             this.time.addEvent({
                 delay: 1000,
                 callback: appearanceAnswer,
+                args: [testObject.Sequence[questionId].ifquestion1],
                 callbackScope: this,
                 repeat: 0
 
             });
         }
-        
+
         //Si choix 2
         function addResponse2() {
             imageAnswer[currentIndex] = this.add.sprite(155, 530, 'reponse');
@@ -177,23 +176,27 @@
             this.time.addEvent({
                 delay: 1000,
                 callback: appearanceAnswer,
+                args: [testObject.Sequence[questionId].ifquestion2],
                 callbackScope: this,
                 repeat: 0
             });
-            
+
             //condition pour fin
             //if () {}
         }
-        
-        function appearanceAnswer() {
-            questionId = testObject.Sequence[questionId].ifquestion2;
+
+        function appearanceAnswer(questionId) {
+            //alert(questionId);
+            //questionId = testObject.Sequence[questionId].ifquestion2;
+            //questionId = testObject.Sequence[questionId].ifquestion2;
+
             imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
 
             //Pour replacer correctement les textes sur deux lignes
             var questionPositionY = 543;
             if (testObject.Sequence[questionId].question.includes("\n")) {
                 questionPositionY = 530;
-            }            
+            }
             question[currentIndex] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
 
             choice2.text = testObject.Sequence[questionId].answer2;
@@ -202,18 +205,23 @@
             //Monte texte question si pas là question reste en bas
             var tween2 = this.tweens.add({
                 targets: question[currentIndex],
-                y: question[currentIndex].y-100,                
+                y: question[currentIndex].y - 100,
                 ease: 'Power1',
                 duration: 3000
             })
             // Monte sprite question
             var tween3 = this.tweens.add({
                 targets: imageQuestion[currentIndex],
-                y: 450,                
+                y: 450,
                 ease: 'Power1',
                 duration: 3000
-            })
+            });
+
+            
         }
+
     </script>
 
-</body></html>
+</body>
+
+</html>
