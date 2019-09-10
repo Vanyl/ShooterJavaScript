@@ -49,11 +49,8 @@
             
             
             "ifquestion1" : 6,
-            "ifquestion2" : 5
-            
-        },
-        
-       
+            "ifquestion2" : 5            
+        },           
         
         {
             "id" : 5,
@@ -64,8 +61,7 @@
             
             "ifquestion1" : 6,
             "ifquestion2" : 8
-        },
-        
+        },        
         
        
         {

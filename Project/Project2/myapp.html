@@ -124,8 +124,8 @@
             //Timer
             this.time.addEvent({
                 delay: 1000,
-                callback: appearanceAnswer,
-                args: [testObject.Sequence[questionId].ifquestion1],
+                callback: appearanceAnswer1,
+                //args: [testObject.Sequence[questionId].ifquestion1],
                 callbackScope: this,
                 repeat: 0
             });
@@ -180,21 +180,53 @@
             //Timer
             this.time.addEvent({
                 delay: 1000,
-                callback: appearanceAnswer,
-                args: [testObject.Sequence[questionId].ifquestion2],
+                callback: appearanceAnswer2,
+                //args: [testObject.Sequence[questionId].ifquestion2],
                 callbackScope: this,
                 repeat: 0
             });
             
-            questionId++;
-
             //condition pour fin
             //if () {}
         }
 
-        function appearanceAnswer(questionId) {
+        //function appearanceAnswer(questionId)
+        function appearanceAnswer1() {
             //alert(questionId);
-            //questionId = testObject.Sequence[questionId].ifquestion2;
+            questionId = testObject.Sequence[questionId].ifquestion1;
+
+
+            imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
+
+            //Pour replacer correctement les textes sur deux lignes
+            var questionPositionY = 543;
+            if (testObject.Sequence[questionId].question.includes("\n")) {
+                questionPositionY = 530;
+            }
+            question[currentIndex] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
+
+            choice1.text = testObject.Sequence[questionId].answer1;
+            choice2.text = testObject.Sequence[questionId].answer2;
+
+            //Monte texte question si pas là question reste en bas
+            var tween2 = this.tweens.add({
+                targets: question[currentIndex],
+                y: question[currentIndex].y - 100,
+                ease: 'Power1',
+                duration: 3000
+            })
+            // Monte sprite question
+            var tween3 = this.tweens.add({
+                targets: imageQuestion[currentIndex],
+                y: 450,
+                ease: 'Power1',
+                duration: 3000
+            });
+        }
+        
+        function appearanceAnswer2() {
+            //alert(questionId);
+            questionId = testObject.Sequence[questionId].ifquestion2;
 
 
             imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
