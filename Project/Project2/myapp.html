@@ -33,7 +33,9 @@
             this.load.image('question', './Assets/bulleconvers.png');
             this.load.image('reponse', './Assets/bulleconvers2.png');
             this.load.image('choice', './Assets/bulleconvers3.png');
-            this.load.text('SequenceQR', 'SequenceQR.json')
+            this.load.image('goodend', './Assets/gend.png');
+            this.load.image('badend', './Assets/bend.png');
+            this.load.text('SequenceQR', 'SequenceQR.json');
         }
 
         function create() {
@@ -196,7 +198,7 @@
             questionId = testObject.Sequence[questionId].ifquestion1;
             //test questionid if inf 100 et puis else peut-être tween
 
-            if (questionId > 100) {
+            if (questionId < 100) {
                 imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
 
                 //Pour replacer correctement les textes sur deux lignes
@@ -223,20 +225,19 @@
                     ease: 'Power1',
                     duration: 3000
                 });
-            } else if (questionId == 101) {
-                imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
-
-            } else if (questionId == 102) {
-                imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
-            }
-
+                }
+                else if (questionId == 101) {
+                var good_end = this.add.sprite(180, 320, 'goodend');}
+                
+                else if (questionId == 102) {
+                var bad_end = this.add.sprite(180, 320, 'badend');}
         }
 
         function appearanceAnswer2() {
             //alert(questionId);
             questionId = testObject.Sequence[questionId].ifquestion2;
 
-            if (questionId > 100) {
+            if (questionId < 100) {
                 imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
 
                 //Pour replacer correctement les textes sur deux lignes
@@ -263,13 +264,14 @@
                     ease: 'Power1',
                     duration: 3000
                 });
-                else if (questionId == 101) {
-                    imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
-
-                } else if (questionId == 102) {
-                    imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
-                }
-            }
+            }                
+            else if (questionId == 101) {
+                var good_end = this.add.sprite(180, 320, 'goodend');
+                setTimeout("window.location.href='ending.html';", 1000);}
+                
+            else if (questionId == 102) {
+                var bad_end = this.add.sprite(180, 320, 'badend');
+                setTimeout("window.location.href='ending.html';", 1000);}            
         }
 
     </script>

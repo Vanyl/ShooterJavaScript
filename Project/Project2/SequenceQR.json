@@ -8,7 +8,7 @@
             "answer2": "Don't answer",
             
             "ifquestion1" : 1, 
-            "ifquestion2" : 8 
+            "ifquestion2" : 101 
         },
         
         {
@@ -71,15 +71,13 @@
             "answer2" : "And I know 991",
             
             
-            "ifquestion1" : 7,
+            "ifquestion1" : 102,
             "ifquestion2" : 101
         },
         
         {
-            "id" : 7, 
-            "question" : " 'BAD' END : 7",
-            "answer1" : "...1",
-            "answer2" : "...2",
+            "id" : 102,             
+            "EndImage" : "bend.png",
             
             
             "ifquestion1" : 6,
@@ -88,7 +86,7 @@
         
         {
             "id" : 101, 
-            "EndImage" : "gjghg.png",
+            "EndImage" : "gend.png"
         }
             
  ]

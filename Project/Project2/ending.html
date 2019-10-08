@@ -27,12 +27,13 @@
 
 
         function preload() {
-            backgroundsprite = this.load.image('background', './Assets/backgroundstart.png');
+            this.load.image('goodend', './Assets/gend.png');
+            this.load.image('badend', './Assets/bend.png');
 
         }
 
         function create() {
-            this.add.sprite(180, 320, 'background');
+            this.add.sprite(180, 320, 'goodend');
         }
 
     </script>
