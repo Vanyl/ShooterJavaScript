@@ -72,7 +72,7 @@
             
             
             "ifquestion1" : 7,
-            "ifquestion2" : 8
+            "ifquestion2" : 101
         },
         
         {
@@ -87,14 +87,8 @@
         },
         
         {
-            "id" : 8, 
-            "question" : " 'GOOD' END : 8",
-            "answer1" : "...1",
-            "answer2" : "...2",
-            
-            
-            "ifquestion1" : 8,
-            "ifquestion2" : 8
+            "id" : 101, 
+            "EndImage" : "gjghg.png",
         }
             
  ]

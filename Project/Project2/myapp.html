@@ -130,7 +130,7 @@
                 repeat: 0
             });
 
-            
+
 
 
         }
@@ -185,7 +185,7 @@
                 callbackScope: this,
                 repeat: 0
             });
-            
+
             //condition pour fin
             //if () {}
         }
@@ -194,68 +194,86 @@
         function appearanceAnswer1() {
             //alert(questionId);
             questionId = testObject.Sequence[questionId].ifquestion1;
+            //test questionid if inf 100 et puis else peut-être tween
 
+            if (questionId > 100) {
+                imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
 
-            imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
+                //Pour replacer correctement les textes sur deux lignes
+                var questionPositionY = 543;
+                if (testObject.Sequence[questionId].question.includes("\n")) {
+                    questionPositionY = 530;
+                }
+                question[currentIndex] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
 
-            //Pour replacer correctement les textes sur deux lignes
-            var questionPositionY = 543;
-            if (testObject.Sequence[questionId].question.includes("\n")) {
-                questionPositionY = 530;
+                choice1.text = testObject.Sequence[questionId].answer1;
+                choice2.text = testObject.Sequence[questionId].answer2;
+
+                //Monte texte question si pas là question reste en bas
+                var tween2 = this.tweens.add({
+                    targets: question[currentIndex],
+                    y: question[currentIndex].y - 100,
+                    ease: 'Power1',
+                    duration: 3000
+                })
+                // Monte sprite question
+                var tween3 = this.tweens.add({
+                    targets: imageQuestion[currentIndex],
+                    y: 450,
+                    ease: 'Power1',
+                    duration: 3000
+                });
+            } else if (questionId == 101) {
+                imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
+
+            } else if (questionId == 102) {
+                imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
             }
-            question[currentIndex] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
 
-            choice1.text = testObject.Sequence[questionId].answer1;
-            choice2.text = testObject.Sequence[questionId].answer2;
-
-            //Monte texte question si pas là question reste en bas
-            var tween2 = this.tweens.add({
-                targets: question[currentIndex],
-                y: question[currentIndex].y - 100,
-                ease: 'Power1',
-                duration: 3000
-            })
-            // Monte sprite question
-            var tween3 = this.tweens.add({
-                targets: imageQuestion[currentIndex],
-                y: 450,
-                ease: 'Power1',
-                duration: 3000
-            });
         }
-        
+
         function appearanceAnswer2() {
             //alert(questionId);
             questionId = testObject.Sequence[questionId].ifquestion2;
 
+            if (questionId > 100) {
+                imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
 
-            imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
+                //Pour replacer correctement les textes sur deux lignes
+                var questionPositionY = 543;
+                if (testObject.Sequence[questionId].question.includes("\n")) {
+                    questionPositionY = 530;
+                }
+                question[currentIndex] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
 
-            //Pour replacer correctement les textes sur deux lignes
-            var questionPositionY = 543;
-            if (testObject.Sequence[questionId].question.includes("\n")) {
-                questionPositionY = 530;
+                choice1.text = testObject.Sequence[questionId].answer1;
+                choice2.text = testObject.Sequence[questionId].answer2;
+
+                //Monte texte question si pas là question reste en bas
+                var tween2 = this.tweens.add({
+                    targets: question[currentIndex],
+                    y: question[currentIndex].y - 100,
+                    ease: 'Power1',
+                    duration: 3000
+                })
+                // Monte sprite question
+                var tween3 = this.tweens.add({
+                    targets: imageQuestion[currentIndex],
+                    y: 450,
+                    ease: 'Power1',
+                    duration: 3000
+                });
+                else if (questionId == 101) {
+                    imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
+
+                } else if (questionId == 102) {
+                    imageQuestion[currentIndex] = this.add.sprite(175, 545, 'question');
+                }
             }
-            question[currentIndex] = this.add.text(10, questionPositionY, testObject.Sequence[questionId].question);
-
-            choice1.text = testObject.Sequence[questionId].answer1;
-            choice2.text = testObject.Sequence[questionId].answer2;
-
-            //Monte texte question si pas là question reste en bas
-            var tween2 = this.tweens.add({
-                targets: question[currentIndex],
-                y: question[currentIndex].y - 100,
-                ease: 'Power1',
-                duration: 3000
-            })
-            // Monte sprite question
-            var tween3 = this.tweens.add({
-                targets: imageQuestion[currentIndex],
-                y: 450,
-                ease: 'Power1',
-                duration: 3000
-            });
         }
+
     </script>
 
-</body></html>
+</body>
+
+</html>
