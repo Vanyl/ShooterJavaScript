@@ -30,8 +30,8 @@
         var questionId = 0;
 
         function preload() {
-            this.load.image('question', './Assets/bulleconvers.png');
-            this.load.image('reponse', './Assets/bulleconvers2.png');
+            this.load.image('question', './Assets/bulleconvers11.png');
+            this.load.image('reponse', './Assets/bulleconvers22.png');
             this.load.image('choice', './Assets/bulleconvers3.png');
             this.load.image('goodend', './Assets/gend.png');
             this.load.image('badend', './Assets/bend.png');
@@ -85,7 +85,7 @@
         //Si choix 1
         function addResponse1() {
             //ajout sprite réponse qd clique sur choice
-            imageAnswer[currentIndex] = this.add.sprite(155, 530, 'reponse');
+            imageAnswer[currentIndex] = this.add.sprite(185, 530, 'reponse');
 
             //if(){} //pour endroit texte si trop long
             answer[currentIndex] = this.add.text(15, 520, testObject.Sequence[questionId].answer1);

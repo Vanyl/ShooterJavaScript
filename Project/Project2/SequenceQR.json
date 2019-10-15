@@ -25,7 +25,7 @@
             "id" : 2,
             "question" : "How much do \nyou take?",
             "answer1" : "I don't understand",
-            "answer2" : "What r u talking about",
+            "answer2" : "What r u talking \nabout",
             
             "ifquestion1" : 3,
             "ifquestion2" : 3 
@@ -44,8 +44,8 @@
         {
             "id" : 4,
             "question" : "Put your webcam on \nor I'll send them to everyone",
-            "answer1" : "No I don't believe u",
-            "answer2" : "Why r u doing this?",
+            "answer1" : "No I don't believe \nu",
+            "answer2" : "Why r u doing \nthis?",
             
             
             "ifquestion1" : 6,
@@ -67,7 +67,7 @@
         {
             "id" : 6, 
             "question" : "Be prepared I know all your contacts",
-            "answer1" : "Ok...",
+            "answer1" : "Please... don't...",
             "answer2" : "And I know 991",
             
             
